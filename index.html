@@ -4,14 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Party Time!</title>
+    <link href="https://fonts.cdnfonts.com/css/morpheus" rel="stylesheet">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=New+Amsterdam&display=swap');
-        @font-face {
+       /* @font-face {
             font-family: 'Morpheus';
             src: url('fonts/wowfont.ttf') format('truetype');
             font-weight: normal;
             font-style: normal;
-        }
+        }*/
         body {
             --main-bg-color: #e0e1dd;
             --second-bg-color: #778da9;
@@ -19,7 +20,7 @@
             --fourth-bg-color: #1b263b;
             --text-color: #0d1b2a;
 
-            font-family: Arial, sans-serif;
+            font-family: monospace, sans-serif;
             background-color: var(--fourth-bg-color);
             color: var(--text-color);
             margin: 0;
@@ -65,7 +66,7 @@
         }
 
         .hidden-content {
-            display: block;
+            display: none;
         }
 
         .side-quest {
@@ -110,15 +111,32 @@
             }
         }
 
+        /* Game canvas styling */
+        canvas {
+            background-color: #f0fff0;
+            display: block;
+            margin: 20px auto;
+            border: 2px solid #4682b4;
+            border-radius: 10px;
+        }
+
     </style>
 </head>
 <body>
+
 <header>
     <h1>Velkommen til innflytningsfest!</h1>
     <p>Håper du er klar for en fartsfylt kveld med masse morro <3!</p>
     <p>Mer info vises når timeren treffer 0!</p>
     <div class="countdown" id="countdown"></div>
 </header>
+
+<!-- Game Section -->
+<section id="game-countdown-start">
+    <h2>Spill mens du venter!</h2>
+    <canvas id="gameCanvas" width="320" height="480"></canvas>
+</section>
+
 <div id="main-content" class="hidden-content">
     <section id="introduction">
         <h2>Intro</h2>
@@ -148,7 +166,7 @@
         </div>
         <div class="schedule-item">
             <strong>20:00 - Beat4beat</strong>
-            <p>Fem kategorier! Fem vanskelighetsgrader! Er du en smarting?.</p>
+            <p>Fem kategorier! Fem vanskelighetsgrader! Er du en smarting?</p>
         </div>
         <div class="schedule-item">
             <strong>21:00 - Tegnelek</strong>
@@ -160,7 +178,7 @@
         </div>
         <div class="schedule-item">
             <strong>22:30 - Kåringer</strong>
-            <p>Vi skal kåre vinnerne for kvelden og gjøre oss klare til å innvadere byen! Første stopp, Old Irish!!.</p>
+            <p>Vi skal kåre vinnerne for kvelden og gjøre oss klare til å innvadere byen! Første stopp, Old Irish!!</p>
         </div>
     </section>
 
@@ -223,8 +241,15 @@
             <p>20 poeng!!!</p>
             </div>
         </div>
+        <div class="side-quest">
+            <div class="wrapper">
+                <h3>Game Master</h3>
+                <p>Personen med høyest score får 10 poeng!</p>
+            </div>
+        </div>
     </section>
 </div>
+
 <footer>
     <p>&copy; Pst: Du er den vakreste jeg vet!</p>
 </footer>
@@ -234,6 +259,7 @@
     const countdownDate = new Date("August 24, 2024 18:00:00").getTime();
     const countdownElement = document.getElementById('countdown');
     const mainContent = document.getElementById('main-content');
+    const gameCountdownStart = document.getElementById('game-countdown-start');
 
     const updateCountdown = () => {
         const now = new Date().getTime();
@@ -250,11 +276,158 @@
             clearInterval(x);
             countdownElement.innerHTML = "HÆLA I TAKET JENTER!";
             mainContent.style.display = "block";
+            gameCountdownStart.style.display = "none";
         }
     };
 
     updateCountdown();
     setInterval(updateCountdown, 1000);
+</script>
+
+<script>
+    // Set up canvas and context
+    const canvas = document.getElementById("gameCanvas");
+    const ctx = canvas.getContext("2d");
+
+    let ballRadius = 10;
+    let x = Math.random() * (canvas.width - 2 * ballRadius) + ballRadius; // Random starting x position
+    let y = canvas.height - 30; // Keep y near the bottom for an initial drop
+    let dx = 6; // Initial speed (double the original speed)
+    let dy = -6; // Initial speed (double the original speed)
+    let paddleHeight = 10;
+    let paddleWidth = 75;
+    let paddleX = (canvas.width - paddleWidth) / 2;
+    let rightPressed = false;
+    let leftPressed = false;
+    let score = 0;
+    let speedIncreaseInterval = 3000; // Speed increases every 5 seconds
+    let doublePointsTime = 30000; // Points double after 30 seconds
+    let pointsMultiplier = 1; // Start with normal points
+
+    // Retrieve high score from localStorage, or initialize to 0 if not found
+    let highScore = localStorage.getItem("highScore") ? parseInt(localStorage.getItem("highScore")) : 0;
+
+    // Event listeners for paddle movement
+    document.addEventListener("keydown", keyDownHandler, false);
+    document.addEventListener("keyup", keyUpHandler, false);
+
+    function keyDownHandler(e) {
+        if (e.key == "Right" || e.key == "ArrowRight") {
+            rightPressed = true;
+        } else if (e.key == "Left" || e.key == "ArrowLeft") {
+            leftPressed = true;
+        }
+    }
+
+    function keyUpHandler(e) {
+        if (e.key == "Right" || e.key == "ArrowRight") {
+            rightPressed = false;
+        } else if (e.key == "Left" || e.key == "ArrowLeft") {
+            leftPressed = false;
+        }
+    }
+
+    function drawBall() {
+        ctx.beginPath();
+        ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
+        ctx.fillStyle = "#0095DD";
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    function drawPaddle() {
+        ctx.beginPath();
+        ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
+        ctx.fillStyle = "#0095DD";
+        ctx.fill();
+        ctx.closePath();
+    }
+
+    function drawScore() {
+        ctx.font = "16px Arial";
+        ctx.fillStyle = "#0095DD";
+        ctx.fillText("Score: " + score, 8, 20);
+    }
+
+    function drawHighScore() {
+        ctx.font = "16px Arial";
+        ctx.fillStyle = "#0095DD";
+        ctx.fillText("High Score: " + highScore, canvas.width - 120, 20); // Positioned in the upper right corner
+    }
+
+    function detectCollision() {
+        if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
+            dx = -dx;
+        }
+        if (y + dy < ballRadius) {
+            dy = -dy;
+        } else if (y + dy > canvas.height - ballRadius) {
+            if (x > paddleX && x < paddleX + paddleWidth) {
+                dy = -dy;
+                score += 1 * pointsMultiplier; // Apply points multiplier
+            } else {
+                // Update high score if current score is higher
+                if (score > highScore) {
+                    highScore = score;
+                    localStorage.setItem("highScore", highScore); // Save new high score in localStorage
+                }
+                // Reset game
+                document.location.reload();
+            }
+        }
+    }
+
+    function movePaddle() {
+        if (rightPressed && paddleX < canvas.width - paddleWidth) {
+            paddleX += 7;
+        } else if (leftPressed && paddleX > 0) {
+            paddleX -= 7;
+        }
+    }
+
+    function increaseSpeed() {
+        if (dx < 0) {
+            dx -= 0.5; // Increase speed in negative direction
+        } else {
+            dx += 0.5; // Increase speed in positive direction
+        }
+
+        if (dy < 0) {
+            dy -= 0.5; // Increase speed in negative direction
+        } else {
+            dy += 0.5; // Increase speed in positive direction
+        }
+    }
+
+    function activateDoublePoints() {
+        pointsMultiplier = 2; // Double the points after 30 seconds
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawBall();
+        drawPaddle();
+        drawScore();
+        drawHighScore(); // Draw high score in the canvas
+        detectCollision();
+        movePaddle();
+
+        x += dx;
+        y += dy;
+
+        requestAnimationFrame(draw);
+    }
+
+    // Start the game loop
+    draw();
+
+    // Increase speed every 5 seconds
+    setInterval(increaseSpeed, speedIncreaseInterval);
+
+    // Double points after 30 seconds
+    setTimeout(activateDoublePoints, doublePointsTime);
+
+
 </script>
 </body>
 </html>
