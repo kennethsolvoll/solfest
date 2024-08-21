@@ -5,28 +5,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Party Time!</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=New+Amsterdam&display=swap');
+        @font-face {
+            font-family: 'Morpheus';
+            src: url('fonts/wowfont.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
         body {
+            --main-bg-color: #e0e1dd;
+            --second-bg-color: #778da9;
+            --third-bg-color: #415a77;
+            --fourth-bg-color: #1b263b;
+            --text-color: #0d1b2a;
+
             font-family: Arial, sans-serif;
-            background-color: #f0f8ff;
-            color: #333;
+            background-color: var(--fourth-bg-color);
+            color: var(--text-color);
             margin: 0;
             padding: 0;
         }
         header {
-            background-color: #4682b4;
-            color: white;
+            background-color: var(--main-bg-color);
+            color: var(--text-color);
             padding: 10px 20px;
             text-align: center;
         }
         section {
             padding: 20px;
             margin: 20px;
-            background-color: #ffffff;
+            background-color: var(--second-bg-color);
             border-radius: 8px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         h2 {
-            color: #4682b4;
+            color: var(--text-color);
         }
         .team {
             margin: 10px 0;
@@ -36,90 +49,191 @@
         }
         .countdown {
             text-align: center;
-            font-size: 2em;
+            font-size: 5em;
             margin-top: 20px;
             color: #ff4500;
         }
         .schedule-item {
             margin: 10px 0;
             padding: 10px;
-            background-color: #f0fff0;
-            border-left: 4px solid #32cd32;
+            background-color: #e6e6fa;
+            border-left: 4px solid var(--third-bg-color);
         }
+
+        section#rules ul li {
+            padding: 10px 0;
+        }
+
+        .hidden-content {
+            display: block;
+        }
+
+        .side-quest {
+            display: flex;
+            width: 100%;
+            min-height: 400px;
+            font-weight: 700;
+            text-align: center;
+            border-radius: 5px;
+            margin: 10px 0;
+            box-sizing: border-box;
+            padding: 10% 10% 25px;
+            font-size: 16px;
+            line-height: 1.5;
+            font-family: "Morpheus",Arial, sans-serif;
+            color: var(--text-color);
+            background-image: url("questbg.png");
+            background-size: 100% 100%;
+            background-position-y: 50px;
+
+            justify-content: center;
+            align-items: center;
+
+
+        }
+
+        .side-quest p {
+            width: 100%;
+            margin: auto;
+        }
+
+        .wrapper {
+            position: relative;
+            width: 80%;
+        }
+
+        /* Kutter ned fullscreen på pc for at scrolls skal se bra ut */
+        @media screen and (min-width: 800px) {
+            body {
+                max-width: 800px;
+                margin: 0 auto;
+            }
+        }
+
     </style>
 </head>
 <body>
 <header>
     <h1>Velkommen til innflytningsfest!</h1>
     <p>Håper du er klar for en fartsfylt kveld med masse morro <3!</p>
+    <p>Mer info vises når timeren treffer 0!</p>
     <div class="countdown" id="countdown"></div>
 </header>
+<div id="main-content" class="hidden-content">
+    <section id="introduction">
+        <h2>Intro</h2>
+        <p>Velkommen til festen du sent vil glemme. Vi er allerede i gang kl 18, og avslutter ca. 23 før vi beveger oss videre. Gjennom kvelden vil vi ha en rekke leker med lagspill, poeng og premier! Håper konkurranseinstinktet er skrudd opp til øverste gir!!</p>
+    </section>
 
-<section id="introduction">
-    <h2>Intro</h2>
-    <p>Velkommen til festen du sent vil glemme. Vi er allerede i gang kl 18, og avslutter ca. 23 før vi beveger oss videre. Gjennom kvelden vil vi ha en rekke leker med lagspill, poeng og premier! Håper konkurranseinstinktet er skrudd opp til øverste gir!!</p>
-</section>
+    <section id="rules">
+        <h2>Festregler:</h2>
+        <ul>
+            <li>Det er ikke lov til å lukte på 'Mystery shots' som finnes på kjøkkenet, den skal hives rett i gapet!.</li>
+            <li>Det er kun én mystery shot per pers.</li>
+            <li>1 mystery shot tilsvarer 1 poeng, her kan laget samle inn litt!</li>
+            <li>Hvert lag må utnevne en 'Dance Champion'.</li>
+            <li>Hvert lag bør utnevne en 'Chug Meister'.</li>
+            <li>Hvert lag bør utnevne en 'Spice Lord'.</li>
+            <li>Chug meisteren har ETT forsøk på å chugge en breezer og få best mulig tid. Beste chuggern får poeng til laget sitt!</li>
+            <li>Spice lorden har muligheten til å ta ETT spice shot (meget spicy) som gir poeng til laget sitt!</li>
+            <li>ÉN modig sjel (på hele festen) får muligheten til å chugge KONGEKOPPEN! Denne koppen kan gi laget ditt MYE poeng.</li>
+        </ul>
+    </section>
 
-<section id="rules">
-    <h2>Festregler:</h2>
-    <ul>
-        <li>Det er ikke lov til å lukte på 'Mystery shots' som finnes på kjøkkenet, den skal hives rett i gapet!.</li>
-        <li>Det er kun én mystery shot per pers.</li>
-        <li>1 mystery shot tilsvarer 1 poeng, her kan laget samle inn litt!</li>
-        <li>Hvert lag må utnevne en 'Dance Champion'.</li>
-        <li>Hvert lag bør utnevne en 'Chug Meister'.</li>
-        <li>Hvert lag bør utnevne en 'Spice Lord'.</li>
-        <li>Chug meisteren har ETT forsøk på å chugge en breezer og få best mulig tid. Beste chuggern får poeng til laget sitt!</li>
-        <li>Spice lorden har muligheten til å ta ETT spice shot (meget spicy) som gir poeng til laget sitt!</li>
-        <li>ÉN modig sjel (på hele festen) får muligheten til å chugge KONGEKOPPEN! Denne koppen kan gi laget ditt MYE poeng.</li>
-    </ul>
-</section>
+    <section id="schedule">
+        <h2>Timeplan:</h2>
+        <div class="schedule-item">
+            <strong>19:00 - Musikkquiz!</strong>
+            <p>Klarer du å huske navn og artist på alle disse BANGERNE?? Man kan få 1+1 poeng for sangnavn og artist(er).</p>
+        </div>
+        <div class="schedule-item">
+            <strong>20:00 - Beat4beat</strong>
+            <p>Fem kategorier! Fem vanskelighetsgrader! Er du en smarting?.</p>
+        </div>
+        <div class="schedule-item">
+            <strong>21:00 - Tegnelek</strong>
+            <p>Tegn filmen uten å si et ord! Resten av laget ditt må prøve å gjette hvilken film du prøver å tegne. Ingen juksing ;)!</p>
+        </div>
+        <div class="schedule-item">
+            <strong>22:00 - Dance Off</strong>
+            <p>Din Dance Champion skal nå vise sine HETE mooves på gulvet i en 1 vs 1 dance off til tops! Resten av lagene stemmer på sin favoritt :))</p>
+        </div>
+        <div class="schedule-item">
+            <strong>22:30 - Kåringer</strong>
+            <p>Vi skal kåre vinnerne for kvelden og gjøre oss klare til å innvadere byen! Første stopp, Old Irish!!.</p>
+        </div>
+    </section>
 
-<section id="schedule">
-    <h2>Timeplan:</h2>
-    <div class="schedule-item">
-        <strong>19:00 - Musikkquiz!</strong>
-        <p>Klarer du å huske navn og artist til alle disse BANGERNE?? Man kan få 1+1 poeng for sangnavn og artist(er).</p>
-    </div>
-    <div class="schedule-item">
-        <strong>20:00 - Beat4beat</strong>
-        <p>Fem kategorier! Fem vanskelighetsgrader! Er du en smarting?.</p>
-    </div>
-    <div class="schedule-item">
-        <strong>21:00 - Tegnelek</strong>
-        <p>Tegn filmen uten å si et ord! Resten av laget ditt må prøve å gjette hvilken film du prøver å tegne. Ingen juksing ;)!</p>
-    </div>
-    <div class="schedule-item">
-        <strong>22:00 - Dance Off</strong>
-        <p>Din Dance Champion skal nå vise sine HETE mooves på gulvet i en 1 vs 1 dance off til tops! Resten av lagene stemmer på sin favoritt :))</p>
-    </div>
-    <div class="schedule-item">
-        <strong>22:30 - Kåringer</strong>
-        <p>Vi skal kåre vinnerne for kvelden og gjøre oss klare til å innvadere byen! Første stopp, Old Irish!!.</p>
-    </div>
-</section>
+    <section id="teams">
 
-<section id="teams">
-    <h2>Lagoppstilling</h2>
-    <div class="team">
-        <h3>Team A</h3>
-        <p>Alice, Bob, Charlie</p>
-    </div>
-    <div class="team">
-        <h3>Team B</h3>
-        <p>David, Eva, Frank</p>
-    </div>
-    <!-- Add more teams here -->
-</section>
+        <h2>Lagoppstilling</h2>
+        <div class="team">
+            <h3>Team A</h3>
+            <p>Thomas, Kristoffer, Marielle, Astrid</p>
+        </div>
+        <div class="team">
+            <h3>Team B</h3>
+            <p>Keim, Per, Martin, Kjetil</p>
+        </div>
+        <div class="team">
+            <h3>Team C</h3>
+            <p>Seb the pleb, Marte, Ole, Tereze</p>
+        </div>
+        <div class="team">
+            <h3>Team D</h3>
+            <p>Erlend, Hogne, Mina, Alexandra</p>
+        </div>
+        <div class="team">
+            <h3>Team E</h3>
+            <p>Audun, Emma, Bendik, Maria Nord</p>
+        </div>
+        <div class="team">
+            <h3>Team F</h3>
+            <p>Simon, Victoria, Amalie, Maria K</p>
+        </div>
+    </section>
 
+    <section id="side-quests">
+        <h2>Side Quests:</h2>
+        <div class="side-quest">
+
+            <div class="wrapper">
+            <h3>Mystery shots</h3>
+            <p>Hver person kan ta 1 shot fra 'mystery shot brettet' hver, som tilsvarer 1 poeng til laget. Totalt kan laget få n poeng, hvor n = antall lagmedlemmer.</p>
+            </div>
+        </div>
+        <div class="side-quest">
+            <div class="wrapper">
+            <h3>Breezer Chug</h3>
+            <p>En Chug Meister fra hvert lag får ett forsøk på å chugge en breezer raskest mulig.</p>
+            <p>Raskeste tid får 15 poeng!</p>
+            </div>
+        </div>
+        <div class="side-quest">
+            <div class="wrapper">
+            <h3>Spice shot</h3>
+            <p>En spice lord fra hvert team kan ta ett super spicy shot.</p>
+            <p>Shotten tilsvarer 10 poeng!</p>
+            </div>
+        </div>
+        <div class="side-quest">
+            <div class="wrapper">
+            <h3>Kongekoppen</h3>
+            <p>ÉN Konge får lov til å drikke kongekoppen, men den skal fylles av folket.</p>
+            <p>20 poeng!!!</p>
+            </div>
+        </div>
+    </section>
+</div>
 <footer>
-    <p>&copy; 2024 Party Time!</p>
+    <p>&copy; Pst: Du er den vakreste jeg vet!</p>
 </footer>
 
 <script>
     // Countdown Timer Script
-    const countdownDate = new Date("August 31, 2024 19:00:00").getTime();
+    const countdownDate = new Date("August 24, 2024 18:00:00").getTime();
     const countdownElement = document.getElementById('countdown');
+    const mainContent = document.getElementById('main-content');
 
     const updateCountdown = () => {
         const now = new Date().getTime();
@@ -134,7 +248,8 @@
 
         if (distance < 0) {
             clearInterval(x);
-            countdownElement.innerHTML = "PARTY TIME!";
+            countdownElement.innerHTML = "HÆLA I TAKET JENTER!";
+            mainContent.style.display = "block";
         }
     };
 
