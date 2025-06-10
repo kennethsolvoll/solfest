@@ -56,14 +56,19 @@
         }
 
         section#rules ul li {
-            padding: 10px 0;
+            background-color: #e6e6fa;      
+            border: 2px solid #0d1b2a;
+            border-radius: 6px;
+            margin-bottom: 10px;
+            padding: 12px 18px;
+            list-style-position: inside;
         }
 
         .hidden-content {
             display: none;
         }
 
-        .game-container {
+        #game-container {
         display: none;
         }
 
@@ -251,7 +256,7 @@
 // filepath: c:\Users\Kenneth\Documents\Git prosjekter\solfest\index.html
 // Improved Countdown Timer Script
 
-const countdownDate = new Date("June 10, 2025 18:27:00").getTime();
+const countdownDate = new Date("June 10, 2025 18:43:00").getTime();
 const countdownElement = document.getElementById('countdown');
 const mainContent = document.getElementById('main-content');
 const gameContainer = document.getElementById('game-container');
@@ -276,7 +281,7 @@ function updateHeader(isCountdownActive) {
         header.innerHTML = `
             <h1>Velkommen til innflytningsfest!</h1>
             <p>Håper du er klar for en fartsfylt kveld med masse morro &lt;3!</p>
-            <p>Mer info vises når timeren treffer 0!</p>
+            <p>Mer info vises når timeren treffer 00:00:00!</p>
             <p>Slå deg ned og spill litt mens.</p>
         `;
     } else {
