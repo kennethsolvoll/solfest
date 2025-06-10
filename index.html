@@ -149,22 +149,22 @@
 <div id="main-content" class="hidden-content">
     <section id="introduction">
         <h2>Intro</h2>
-        <p>Velkommen til festen du sent vil glemme. Vi er allerede i gang kl 18, og avslutter ca. 23 før vi beveger oss videre. Gjennom kvelden vil vi ha en rekke leker med lagspill, poeng og premier! Håper konkurranseinstinktet er skrudd opp til øverste gir!!</p>
+        <p>Velkommen til festen du sent vil glemme. Kveldens første aktivitet starter kl. 19, mer info finner du nedenfor. Kvelden byr på en rekke leker med lagspill, poeng og premier! Det er egentlig stilletid kl. 22:00, så greit om alle har det i bakhodet når den tid kommer. Håper konkurranseinstinktet er skrudd opp til øverste gir!!</p>
     </section>
 
     <section id="rules">
         <h2>Festregler:</h2>
         <ul>
-            <li>Det er ikke lov til å lukte på 'Mystery shots' som finnes på kjøkkenet, den skal hives rett i gapet!.</li>
-            <li>Det er kun én mystery shot per pers.</li>
+            <li>Det er ikke lov til å lukte på 'Mystery shots' som finnes på kjøkkenet, disse skal hives rett i gapet!.</li>
+            <li>Det er kun én mystery shot per pers. Disse drikkes på eget ansvar.</li>
             <li>1 mystery shot tilsvarer 1 poeng, her kan laget samle inn litt!</li>
-            <li>Hvert lag må utnevne en 'Dance Champion'.</li>
-            <li>Hvert lag bør utnevne en 'Chug Meister'.</li>
-            <li>Hvert lag bør utnevne en 'Spice Lord'.</li>
-            <li>Chug meisteren har ETT forsøk på å chugge en breezer og få best mulig tid. Beste chuggern får poeng til laget sitt!</li>
-            <li>Spice lorden har muligheten til å ta ETT spice shot (meget spicy) som gir poeng til laget sitt!</li>
-            <li>ÉN modig sjel (på hele festen) får muligheten til å chugge KONGEKOPPEN! Denne koppen kan gi laget ditt MYE poeng.</li>
             <li>Når OPUS kommer på, slipper man alt og starter stein, saks, papir! Fire utvalgte OPUS Fenriker er utvalgt, og disse starter alltid.</li>
+            <li>Hvert lag må utnevne en 'Dance Champion'.</li>
+            <li>Hvert lag bør utnevne en 'Bånnskientusiast'.</li>
+            <li>Hvert lag bør utnevne en 'Chillikriger'.</li>
+            <li>Bånnskientusiasten deltar på en bånnskikonkurranse der en breezer skal drikkes raskest mulig. Alle Bånnskientusiaster kjører mot hverandre samtidig og vinneren henter poeng til laget sitt!</li>
+            <li>Chilikrigeren deltar på sausesmaking. Alle krigerne får en teskje med sterk chilisaus, og alle konsumerer sausen samtidig. Alle som gjennomfører henter poeng til laget sitt!</li>
+            <li>ÉN modig sjel (på hele festen) får muligheten til å bånnskie KONGEKOPPEN! Denne koppen kan gi laget ditt MYE poeng. Haken er at hvem som helst på festen kan tilføye drikkbar væske oppi koppen.</li>
         </ul>
     </section>
 
@@ -261,10 +261,11 @@
 // filepath: c:\Users\Kenneth\Documents\Git prosjekter\solfest\index.html
 // Improved Countdown Timer Script
 
-const countdownDate = new Date("June 10, 2025 19:43:00").getTime();
+const countdownDate = new Date("June 10, 2025 20:03:00").getTime();
 const countdownElement = document.getElementById('countdown');
 const mainContent = document.getElementById('main-content');
 const gameContainer = document.getElementById('game-container');
+const gameCountdownStart = document.getElementById('game-countdown-start');
 
 function showMainContent() {
     mainContent.classList.remove('hidden-content');
