@@ -138,7 +138,10 @@ function drawScore() {
 function drawHighScore() {
     ctx.font = `${Math.floor(canvas.height/16)}px Arial`;
     ctx.fillStyle = "#0095DD";
-    ctx.fillText("High Score: " + highScore, canvas.width - 120, 20);
+    const text = "High Score: " + highScore;
+    const padding = 12;
+    const textWidth = ctx.measureText(text).width;
+    ctx.fillText(text, canvas.width - textWidth - padding, 20);
 }
 
 // Game logic
@@ -150,9 +153,16 @@ function detectCollision() {
         dy = -dy;
     } else if (y + dy * dt > canvas.height - ballRadius) {
         if (x > paddleX && x < paddleX + paddleWidth) {
-            dy = -dy;
-            score += 1 * pointsMultiplier;
-        } else {
+          // Calculate hit position (-1 to 1, center is 0)
+          const hitPos = ((x - paddleX) - paddleWidth / 2) / (paddleWidth / 2);
+          // Max bounce angle in radians (e.g. 60deg)
+          const maxBounce = Math.PI / 3;
+          const bounceAngle = hitPos * maxBounce;
+          const speed = Math.sqrt(dx * dx + dy * dy);
+          dx = speed * Math.sin(bounceAngle);
+          dy = -Math.abs(speed * Math.cos(bounceAngle));
+          score += 1 * pointsMultiplier;
+          } else {
             if (score > highScore) {
                 highScore = score;
                 localStorage.setItem("highScore", highScore);
@@ -177,12 +187,23 @@ function increaseSpeed() {
     dx *= 1.1;
     dy *= 1.1;
 }
-function activateDoublePoints() {
-    pointsMultiplier = 2;
+
+
+// Increase multiplier every 10 seconds
+setInterval(() => {
+    pointsMultiplier += 1;
+}, 10000);
+
+// (Optional) Show multiplier on screen
+function drawMultiplier() {
+    ctx.font = `${Math.floor(canvas.height/18)}px Arial`;
+    ctx.fillStyle = "#0095DD";
+    const text = "x" + pointsMultiplier;
+    const textWidth = ctx.measureText(text).width;
+    ctx.fillText(text, (canvas.width - textWidth) / 2, 20);
 }
 
-// Main loop with delta time
-let dt = 0;
+// In your draw() function, after drawHighScore():
 function draw(timestamp) {
     if (!lastTime) lastTime = timestamp;
     dt = (timestamp - lastTime) / 1000; // seconds
@@ -193,6 +214,7 @@ function draw(timestamp) {
     drawPaddle();
     drawScore();
     drawHighScore();
+    drawMultiplier(); // <-- add this line
     detectCollision();
     movePaddle(dt);
 
@@ -201,11 +223,6 @@ function draw(timestamp) {
 
     requestAnimationFrame(draw);
 }
-requestAnimationFrame(draw);
-
-// Timers
-setInterval(increaseSpeed, speedIncreaseInterval);
-setTimeout(activateDoublePoints, doublePointsTime);
 
 // Recalculate sizes on resize
 window.addEventListener('resize', () => {
