@@ -128,6 +128,10 @@
     <p>Mer info vises når timeren treffer 0!</p>
 </header>
 
+<div id="game-container">
+    <iframe src="game.html" width="100%" height="500" style="border:none;"></iframe>
+</div>
+
 <div id="main-content" class="hidden-content">
     <section id="introduction">
         <h2>Intro</h2>
@@ -247,9 +251,39 @@ const countdownDate = new Date("June 10, 2025 18:01:00").getTime();
 const countdownElement = document.getElementById('countdown');
 const mainContent = document.getElementById('main-content');
 const gameCountdownStart = document.getElementById('game-countdown-start');
+const gameContainer = document.getElementById('game-container');
+
+function showMainContent() {
+    mainContent.classList.remove('hidden-content');
+    countdownElement.innerHTML = "HÆLA I TAKET JENTER!";
+    gameCountdownStart.style.display = "none";
+    updateHeader(false); 
+    if (gameContainer) gameContainer.style.display = "none";
+}
 
 function pad(n) {
     return n.toString().padStart(2, '0');
+}
+
+function showGameWhileCountdown() {
+    if (gameContainer) gameContainer.style.display = "block";
+}
+
+function updateHeader(isCountdownActive) {
+    const header = document.querySelector('header');
+    if (isCountdownActive) {
+        header.innerHTML = `
+            <h1>Velkommen til innflytningsfest!</h1>
+            <p>Håper du er klar for en fartsfylt kveld med masse morro &lt;3!</p>
+            <p>Mer info vises når timeren treffer 0!</p>
+            <p>Slå deg ned og spill litt mens.</p>
+        `;
+    } else {
+        header.innerHTML = `
+            <h1>La festen begynne!</h1>
+            <p>Alle detaljer og leker er nå tilgjengelige. Kos dere masse!</p>
+        `;
+    }
 }
 
 function formatCountdown(timer) {
@@ -263,12 +297,6 @@ function formatCountdown(timer) {
     } else {
         return `${pad(hours + days * 24)}:${pad(minutes)}:${pad(seconds)}`;
     }
-}
-
-function showMainContent() {
-    mainContent.classList.remove('hidden-content');
-    countdownElement.innerHTML = "HÆLA I TAKET JENTER!";
-    gameCountdownStart.style.display = "none";
 }
 
 function updateCountdown() {
@@ -285,10 +313,13 @@ function updateCountdown() {
 
 // Initial check in case time is already up
 if (new Date().getTime() >= countdownDate) {
+    updateHeader(false);
     showMainContent();
 } else {
+    updateHeader(true);
     updateCountdown();
     window._countdownInterval = setInterval(updateCountdown, 1000);
+    showGameWhileCountdown();
 }
 </script>
 </body>
