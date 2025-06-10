@@ -165,25 +165,25 @@ function detectCollision() {
         if (x > paddleX && x < paddleX + paddleWidth) {
           // Calculate hit position (-1 to 1, center is 0)
           const hitPos = ((x - paddleX) - paddleWidth / 2) / (paddleWidth / 2);
-          // Max bounce angle in radians (e.g. 60deg)
-          const maxBounce = Math.PI / 3;
-          const bounceAngle = hitPos * maxBounce;
+          const maxBounce = Math.PI / 3; // 60 degrees
+          let bounceAngle = hitPos * maxBounce;
 
-          // Prevent near-vertical bounces (add a minimum angle)
-          const minAngle = Math.PI / 12; // 15 degrees
-          if (Math.abs(bounceAngle) < minAngle) {
-              bounceAngle = (bounceAngle < 0 ? -1 : 1) * minAngle;
+          // Only add a tiny random offset if the bounce is almost vertical
+          if (Math.abs(bounceAngle) < 0.05) {
+              bounceAngle += (Math.random() - 0.5) * 0.2; // ±0.1 radians
           }
 
+          // Always use the current speed
           const speed = Math.sqrt(dx * dx + dy * dy);
           dx = speed * Math.sin(bounceAngle);
-          dy = -Math.abs(speed * Math.cos(bounceAngle));
+          dy = -Math.abs(speed * Math.cos(bounceAngle)); // Always up
           score += 1 * pointsMultiplier;
           } else {
             if (score > highScore) {
                 highScore = score;
                 localStorage.setItem("highScore", highScore);
             }
+            pointsMultiplier = 1;
             document.location.reload();
         }
     }
