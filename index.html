@@ -247,16 +247,14 @@
 // filepath: c:\Users\Kenneth\Documents\Git prosjekter\solfest\index.html
 // Improved Countdown Timer Script
 
-const countdownDate = new Date("June 10, 2025 18:19:00").getTime();
+const countdownDate = new Date("June 10, 2025 18:23:00").getTime();
 const countdownElement = document.getElementById('countdown');
 const mainContent = document.getElementById('main-content');
-const gameCountdownStart = document.getElementById('game-countdown-start');
 const gameContainer = document.getElementById('game-container');
 
 function showMainContent() {
     mainContent.classList.remove('hidden-content');
     countdownElement.innerHTML = "HÆLA I TAKET JENTER!";
-    gameCountdownStart.style.display = "none";
     updateHeader(false); 
     if (gameContainer) gameContainer.style.display = "none";
 }
