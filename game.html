@@ -2,176 +2,215 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Game</title>
+      <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+            background: #e0e1dd;
+        }
         body {
-          margin: 0;
-          padding: 0;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          height: 100vh;
-          background: #e0e1dd;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
         canvas {
-          display: block;
-          margin: 0 auto;
-          border: 2px solid #4682b4;
-          border-radius: 10px;
-          background: #e0e1dd;
+            display: block;
+            margin: 0 auto;
+            border: 2px solid #4682b4;
+            border-radius: 10px;
+            background: #fff;
+            max-width: 98vw;
+            height: auto;
         }
       </style>
 
 </head>
 <body>
 
-  <canvas id="gameCanvas" width="480" height="320"></canvas>
+<canvas id="gameCanvas" width="480" height="320"></canvas>
 
 <script>
-  // Set up canvas and context
-  const canvas = document.getElementById("gameCanvas");
-  const ctx = canvas.getContext("2d");
+const BASE_WIDTH = 480;
+const BASE_HEIGHT = 320;
 
-  let ballRadius = 10;
-  let x = Math.random() * (canvas.width - 2 * ballRadius) + ballRadius; // Random starting x position
-  let y = canvas.height - 30; // Keep y near the bottom for an initial drop
-  let dx = 6; // Initial speed (double the original speed)
-  let dy = -6; // Initial speed (double the original speed)
-  let paddleHeight = 10;
-  let paddleWidth = 75;
-  let paddleX = (canvas.width - paddleWidth) / 2;
-  let rightPressed = false;
-  let leftPressed = false;
-  let score = 0;
-  let speedIncreaseInterval = 3000; // Speed increases every 5 seconds
-  let doublePointsTime = 30000; // Points double after 30 seconds
-  let pointsMultiplier = 1; // Start with normal points
-
-  // Retrieve high score from localStorage, or initialize to 0 if not found
-  let highScore = localStorage.getItem("highScore") ? parseInt(localStorage.getItem("highScore")) : 0;
-
-  // Event listeners for paddle movement
-  document.addEventListener("keydown", keyDownHandler, false);
-  document.addEventListener("keyup", keyUpHandler, false);
-
-  function keyDownHandler(e) {
-    if (e.key == "Right" || e.key == "ArrowRight") {
-      rightPressed = true;
-    } else if (e.key == "Left" || e.key == "ArrowLeft") {
-      leftPressed = true;
+// Responsive canvas setup
+function resizeCanvas() {
+    const canvas = document.getElementById("gameCanvas");
+    let width = Math.min(window.innerWidth * 0.98, BASE_WIDTH);
+    let height = width * (BASE_HEIGHT / BASE_WIDTH);
+    if (height > window.innerHeight * 0.7) {
+        height = window.innerHeight * 0.7;
+        width = height * (BASE_WIDTH / BASE_HEIGHT);
     }
-  }
+    canvas.width = width;
+    canvas.height = height;
+}
+resizeCanvas();
+window.addEventListener('resize', resizeCanvas);
 
-  function keyUpHandler(e) {
-    if (e.key == "Right" || e.key == "ArrowRight") {
-      rightPressed = false;
-    } else if (e.key == "Left" || e.key == "ArrowLeft") {
-      leftPressed = false;
+const canvas = document.getElementById("gameCanvas");
+const ctx = canvas.getContext("2d");
+
+let ballRadius = 10;
+let x = canvas.width / 2;
+let y = canvas.height - 30;
+let dx = 180; // pixels per second (not per frame!)
+let dy = -180;
+let paddleHeight = 10;
+let paddleWidth = 75;
+let paddleX = (canvas.width - paddleWidth) / 2;
+let rightPressed = false;
+let leftPressed = false;
+let score = 0;
+let speedIncreaseInterval = 5000; // ms
+let doublePointsTime = 30000; // ms
+let pointsMultiplier = 1;
+let lastTime = null;
+
+// Responsive paddle and ball
+function updateSizes() {
+    paddleWidth = canvas.width * 0.18;
+    paddleHeight = canvas.height * 0.03;
+    ballRadius = Math.max(8, canvas.width * 0.02);
+    if (paddleX + paddleWidth > canvas.width) {
+        paddleX = canvas.width - paddleWidth;
     }
-  }
+}
+updateSizes();
+window.addEventListener('resize', updateSizes);
 
-  function drawBall() {
+// High score
+let highScore = localStorage.getItem("highScore") ? parseInt(localStorage.getItem("highScore")) : 0;
+
+// Keyboard controls
+document.addEventListener("keydown", keyDownHandler, false);
+document.addEventListener("keyup", keyUpHandler, false);
+
+function keyDownHandler(e) {
+    if (e.key === "Right" || e.key === "ArrowRight") rightPressed = true;
+    else if (e.key === "Left" || e.key === "ArrowLeft") leftPressed = true;
+}
+function keyUpHandler(e) {
+    if (e.key === "Right" || e.key === "ArrowRight") rightPressed = false;
+    else if (e.key === "Left" || e.key === "ArrowLeft") leftPressed = false;
+}
+
+// Touch controls
+canvas.addEventListener("touchstart", handleTouch, false);
+canvas.addEventListener("touchmove", handleTouch, false);
+function handleTouch(e) {
+    e.preventDefault();
+    const rect = canvas.getBoundingClientRect();
+    const touch = e.touches[0];
+    const touchX = touch.clientX - rect.left;
+    // Center paddle on touch
+    paddleX = touchX - paddleWidth / 2;
+    // Clamp
+    if (paddleX < 0) paddleX = 0;
+    if (paddleX + paddleWidth > canvas.width) paddleX = canvas.width - paddleWidth;
+}
+
+// Drawing functions
+function drawBall() {
     ctx.beginPath();
     ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
     ctx.fillStyle = "#0095DD";
     ctx.fill();
     ctx.closePath();
-  }
-
-  function drawPaddle() {
+}
+function drawPaddle() {
     ctx.beginPath();
     ctx.rect(paddleX, canvas.height - paddleHeight, paddleWidth, paddleHeight);
     ctx.fillStyle = "#0095DD";
     ctx.fill();
     ctx.closePath();
-  }
-
-  function drawScore() {
-    ctx.font = "16px Arial";
+}
+function drawScore() {
+    ctx.font = `${Math.floor(canvas.height/16)}px Arial`;
     ctx.fillStyle = "#0095DD";
     ctx.fillText("Score: " + score, 8, 20);
-  }
-
-  function drawHighScore() {
-    ctx.font = "16px Arial";
+}
+function drawHighScore() {
+    ctx.font = `${Math.floor(canvas.height/16)}px Arial`;
     ctx.fillStyle = "#0095DD";
-    ctx.fillText("High Score: " + highScore, canvas.width - 120, 20); // Positioned in the upper right corner
-  }
+    ctx.fillText("High Score: " + highScore, canvas.width - 120, 20);
+}
 
-  function detectCollision() {
-    if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
-      dx = -dx;
+// Game logic
+function detectCollision() {
+    if (x + dx * dt > canvas.width - ballRadius || x + dx * dt < ballRadius) {
+        dx = -dx;
     }
-    if (y + dy < ballRadius) {
-      dy = -dy;
-    } else if (y + dy > canvas.height - ballRadius) {
-      if (x > paddleX && x < paddleX + paddleWidth) {
+    if (y + dy * dt < ballRadius) {
         dy = -dy;
-        score += 1 * pointsMultiplier; // Apply points multiplier
-      } else {
-        // Update high score if current score is higher
-        if (score > highScore) {
-          highScore = score;
-          localStorage.setItem("highScore", highScore); // Save new high score in localStorage
+    } else if (y + dy * dt > canvas.height - ballRadius) {
+        if (x > paddleX && x < paddleX + paddleWidth) {
+            dy = -dy;
+            score += 1 * pointsMultiplier;
+        } else {
+            if (score > highScore) {
+                highScore = score;
+                localStorage.setItem("highScore", highScore);
+            }
+            document.location.reload();
         }
-        // Reset game
-        document.location.reload();
-      }
     }
-  }
-
-  function movePaddle() {
+}
+function movePaddle(dt) {
+    const paddleSpeed = canvas.width * 1.2; // pixels per second
     if (rightPressed && paddleX < canvas.width - paddleWidth) {
-      paddleX += 7;
+        paddleX += paddleSpeed * dt;
+        if (paddleX > canvas.width - paddleWidth) paddleX = canvas.width - paddleWidth;
     } else if (leftPressed && paddleX > 0) {
-      paddleX -= 7;
+        paddleX -= paddleSpeed * dt;
+        if (paddleX < 0) paddleX = 0;
     }
-  }
+}
 
-  function increaseSpeed() {
-    if (dx < 0) {
-      dx -= 0.5; // Increase speed in negative direction
-    } else {
-      dx += 0.5; // Increase speed in positive direction
-    }
+// Speed and points
+function increaseSpeed() {
+    dx *= 1.1;
+    dy *= 1.1;
+}
+function activateDoublePoints() {
+    pointsMultiplier = 2;
+}
 
-    if (dy < 0) {
-      dy -= 0.5; // Increase speed in negative direction
-    } else {
-      dy += 0.5; // Increase speed in positive direction
-    }
-  }
+// Main loop with delta time
+let dt = 0;
+function draw(timestamp) {
+    if (!lastTime) lastTime = timestamp;
+    dt = (timestamp - lastTime) / 1000; // seconds
+    lastTime = timestamp;
 
-  function activateDoublePoints() {
-    pointsMultiplier = 2; // Double the points after 30 seconds
-  }
-
-  function draw() {
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     drawBall();
     drawPaddle();
     drawScore();
-    drawHighScore(); // Draw high score in the canvas
+    drawHighScore();
     detectCollision();
-    movePaddle();
+    movePaddle(dt);
 
-    x += dx;
-    y += dy;
+    x += dx * dt;
+    y += dy * dt;
 
     requestAnimationFrame(draw);
-  }
+}
+requestAnimationFrame(draw);
 
-  // Start the game loop
-  draw();
+// Timers
+setInterval(increaseSpeed, speedIncreaseInterval);
+setTimeout(activateDoublePoints, doublePointsTime);
 
-  // Increase speed every 5 seconds
-  setInterval(increaseSpeed, speedIncreaseInterval);
-
-  // Double points after 30 seconds
-  setTimeout(activateDoublePoints, doublePointsTime);
-
-
+// Recalculate sizes on resize
+window.addEventListener('resize', () => {
+    updateSizes();
+});
 </script>
 
 </body>
