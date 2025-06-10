@@ -49,6 +49,8 @@ function resizeCanvas() {
     }
     canvas.width = width;
     canvas.height = height;
+    updateSizes();
+    resetPositions();
 }
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
@@ -83,6 +85,12 @@ function updateSizes() {
 }
 updateSizes();
 window.addEventListener('resize', updateSizes);
+
+function resetPositions() {
+    x = canvas.width / 2;
+    y = canvas.height - 30;
+    paddleX = (canvas.width - paddleWidth) / 2;
+}
 
 // High score
 let highScore = localStorage.getItem("highScore") ? parseInt(localStorage.getItem("highScore")) : 0;
@@ -226,7 +234,7 @@ function draw(timestamp) {
 
 // Recalculate sizes on resize
 window.addEventListener('resize', () => {
-    updateSizes();
+    resizeCanvas();
 });
 </script>
 
