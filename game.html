@@ -156,36 +156,34 @@ function drawHighScore() {
 
 // Game logic
 function detectCollision() {
-    if (x + dx * dt > canvas.width - ballRadius || x + dx * dt < ballRadius) {
-        dx = -dx;
-    }
-    if (y + dy * dt < ballRadius) {
-        dy = -dy;
-    } else if (y + dy * dt > canvas.height - ballRadius) {
-        if (x > paddleX && x < paddleX + paddleWidth) {
-          // Calculate hit position (-1 to 1, center is 0)
-          const hitPos = ((x - paddleX) - paddleWidth / 2) / (paddleWidth / 2);
-          const maxBounce = Math.PI / 3; // 60 degrees
-          let bounceAngle = hitPos * maxBounce;
-
-          // Only add a tiny random offset if the bounce is almost vertical
-          if (Math.abs(bounceAngle) < 0.05) {
-              bounceAngle += (Math.random() - 0.5) * 0.2; // ±0.1 radians
-          }
-
-          // Always use the current speed
-          const speed = Math.sqrt(dx * dx + dy * dy);
-          dx = speed * Math.sin(bounceAngle);
-          dy = -Math.abs(speed * Math.cos(bounceAngle)); // Always up
-          score += 1 * pointsMultiplier;
-          } else {
-            if (score > highScore) {
-                highScore = score;
-                localStorage.setItem("highScore", highScore);
-            }
-            pointsMultiplier = 1;
-            document.location.reload();
+    const nextY = y + dy * dt;
+    const prevY = y;
+    const paddleY = canvas.height - ballRadius;
+    if (
+        // Ball crosses the paddle line this frame
+        prevY <= paddleY && nextY >= paddleY &&
+        // Ball is horizontally over the paddle
+        x > paddleX && x < paddleX + paddleWidth
+    ) {
+        // ...bounce logic as before...
+        const hitPos = ((x - paddleX) - paddleWidth / 2) / (paddleWidth / 2);
+        const maxBounce = Math.PI / 3;
+        let bounceAngle = hitPos * maxBounce;
+        if (Math.abs(bounceAngle) < 0.05) {
+            bounceAngle += (Math.random() - 0.5) * 0.2;
         }
+        const speed = Math.sqrt(dx * dx + dy * dy);
+        dx = speed * Math.sin(bounceAngle);
+        dy = -Math.abs(speed * Math.cos(bounceAngle));
+        score += 1 * pointsMultiplier;
+    } else if (nextY > canvas.height - ballRadius) {
+        // Missed paddle: game over
+        if (score > highScore) {
+            highScore = score;
+            localStorage.setItem("highScore", highScore);
+        }
+        pointsMultiplier = 1;
+        document.location.reload();
     }
 }
 function movePaddle(dt) {
