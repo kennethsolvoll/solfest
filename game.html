@@ -41,6 +41,27 @@ const BASE_HEIGHT = 320;
 const canvas = document.getElementById("gameCanvas");
 const ctx = canvas.getContext("2d");
 
+let ballRadius = 10;
+let x = canvas.width / 2;
+let y = canvas.height - 30;
+let dx = 180; // pixels per second (not per frame!)
+let dy = -180;
+
+let paddleHeight = 10;
+let paddleWidth = 75;
+let paddleX = (canvas.width - paddleWidth) / 2;
+
+let rightPressed = false;
+let leftPressed = false;
+
+let score = 0;
+let highScore = localStorage.getItem("highScore") ? parseInt(localStorage.getItem("highScore")) : 0;
+
+let speedIncreaseInterval = 5000; // ms
+let doublePointsTime = 30000; // ms
+let pointsMultiplier = 1;
+let lastTime = null;
+
 // Responsive canvas setup
 function resizeCanvas() {
     const canvas = document.getElementById("gameCanvas");
@@ -57,22 +78,6 @@ function resizeCanvas() {
 }
 resizeCanvas();
 window.addEventListener('resize', resizeCanvas);
-
-let ballRadius = 10;
-let x = canvas.width / 2;
-let y = canvas.height - 30;
-let dx = 180; // pixels per second (not per frame!)
-let dy = -180;
-let paddleHeight = 10;
-let paddleWidth = 75;
-let paddleX = (canvas.width - paddleWidth) / 2;
-let rightPressed = false;
-let leftPressed = false;
-let score = 0;
-let speedIncreaseInterval = 5000; // ms
-let doublePointsTime = 30000; // ms
-let pointsMultiplier = 1;
-let lastTime = null;
 
 // Responsive paddle and ball
 function updateSizes() {
@@ -91,9 +96,6 @@ function resetPositions() {
     y = canvas.height - 30;
     paddleX = (canvas.width - paddleWidth) / 2;
 }
-
-// High score
-let highScore = localStorage.getItem("highScore") ? parseInt(localStorage.getItem("highScore")) : 0;
 
 // Keyboard controls
 document.addEventListener("keydown", keyDownHandler, false);
