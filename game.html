@@ -168,6 +168,13 @@ function detectCollision() {
           // Max bounce angle in radians (e.g. 60deg)
           const maxBounce = Math.PI / 3;
           const bounceAngle = hitPos * maxBounce;
+
+          // Prevent near-vertical bounces (add a minimum angle)
+          const minAngle = Math.PI / 12; // 15 degrees
+          if (Math.abs(bounceAngle) < minAngle) {
+              bounceAngle = (bounceAngle < 0 ? -1 : 1) * minAngle;
+          }
+
           const speed = Math.sqrt(dx * dx + dy * dy);
           dx = speed * Math.sin(bounceAngle);
           dy = -Math.abs(speed * Math.cos(bounceAngle));
@@ -198,6 +205,8 @@ function increaseSpeed() {
     dy *= 1.1;
 }
 
+// Increase speed every 5 seconds
+setInterval(increaseSpeed, 5000);
 
 // Increase multiplier every 10 seconds
 setInterval(() => {
