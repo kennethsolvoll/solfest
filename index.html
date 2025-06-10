@@ -63,6 +63,10 @@
             display: none;
         }
 
+        .game-container {
+        display: none;
+        }
+
         .side-quest {
             display: flex;
             width: 100%;
@@ -247,14 +251,13 @@
 // filepath: c:\Users\Kenneth\Documents\Git prosjekter\solfest\index.html
 // Improved Countdown Timer Script
 
-const countdownDate = new Date("June 10, 2025 18:23:00").getTime();
+const countdownDate = new Date("June 10, 2025 18:27:00").getTime();
 const countdownElement = document.getElementById('countdown');
 const mainContent = document.getElementById('main-content');
 const gameContainer = document.getElementById('game-container');
 
 function showMainContent() {
     mainContent.classList.remove('hidden-content');
-    countdownElement.innerHTML = "HÆLA I TAKET JENTER!";
     updateHeader(false); 
     if (gameContainer) gameContainer.style.display = "none";
 }
@@ -278,7 +281,7 @@ function updateHeader(isCountdownActive) {
         `;
     } else {
         header.innerHTML = `
-            <h1>La festen begynne!</h1>
+            <h1>HÆLA I TAKET JENTER!</h1>
             <p>Alle detaljer og leker er nå tilgjengelige. Kos dere masse!</p>
         `;
     }
