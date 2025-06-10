@@ -156,6 +156,20 @@ function drawHighScore() {
 
 // Game logic
 function detectCollision() {
+    // Wall collisions
+    if (x + dx * dt < ballRadius) {
+        x = ballRadius;
+        dx = -dx;
+    } else if (x + dx * dt > canvas.width - ballRadius) {
+        x = canvas.width - ballRadius;
+        dx = -dx;
+    }
+    if (y + dy * dt < ballRadius) {
+        y = ballRadius;
+        dy = -dy;
+    }
+
+    // Paddle collision
     const nextY = y + dy * dt;
     const prevY = y;
     const paddleY = canvas.height - ballRadius;
