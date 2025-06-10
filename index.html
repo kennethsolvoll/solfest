@@ -129,6 +129,56 @@
             border-radius: 10px;
         }
 
+        .flame {
+            display: inline-block;
+            position: relative;
+            width: 24px;
+            height: 32px;
+            margin-right: 6px;
+        }
+        .flame::before, .flame::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            background: radial-gradient(circle at 60% 40%, #fff 0%, #ff9800 60%, #e53935 100%);
+            width: 24px;
+            height: 32px;
+            opacity: 0.8;
+            animation: flicker 0.7s infinite alternate;
+        }
+        .flame::after {
+            width: 16px;
+            height: 20px;
+            background: radial-gradient(circle at 60% 40%, #fff 0%, #ffd740 60%, #ff5722 100%);
+            opacity: 0.7;
+            animation-delay: 0.3s;
+        }
+
+        @keyframes flicker {
+            0% { transform: translateX(-50%) scaleY(1); opacity: 0.9; }
+            100% { transform: translateX(-50%) scaleY(1.1) scaleX(1.05); opacity: 1; }
+        }
+
+        .sparkle {
+            position: relative;
+            display: inline-block;
+            color: gold;
+            background: linear-gradient(90deg, #fffbe6 0%, #ffe066 50%, #fffbe6 100%);
+            background-size: 200% 100%;
+            animation: shine 2s linear infinite;
+            border-radius: 8px;
+            padding: 2px 8px;
+            box-shadow: 0 0 12px 2px gold, 0 0 40px 8px #ffe06644;
+        }
+
+        @keyframes shine {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
     </style>
 </head>
 <body>
@@ -179,6 +229,7 @@
             <p>Tegn filmen uten å si et ord! Resten av laget ditt må prøve å gjette hvilken film du prøver å tegne. Ingen juksing!</p>
         </div>
         <div class="schedule-item">
+            <span class="flame"></span>
             <strong>21:30 - Chiliritualet</strong>
             <p>Chilikrigerne samles for å teste sitt mot.</p>
         </div>
@@ -190,25 +241,25 @@
 
     <section id="teams">
 
-        <h2>Lagoppstilling</h2>
+        <h2>Lagoppstillingene:</h2>
         <div class="team">
-            <h3>Team A</h3>
+            <h3>Swipe Right Squad</h3>
             <p>Thomas A, Kristoffer, Vilde, Stine Marie</p>
         </div>
         <div class="team">
-            <h3>Team B</h3>
+            <h3>Hogwarts Dropouts</h3>
             <p>Keim, Simen, Amalie, Mina</p>
         </div>
         <div class="team">
-            <h3>Team C</h3>
-            <p>, Samuel, Bendik, Marielle, Kenneth/Hedda</p>
+            <h3>The Hangover Heroes</h3>
+            <p>Samuel, Bendik, Marielle, Kenneth/Hedda</p>
         </div>
         <div class="team">
-            <h3>Team D</h3>
+            <h3>Tequila Mockingbirds</h3>
             <p>Sander, Seb the pleb, Ole, Maria</p>
         </div>
         <div class="team">
-            <h3>Team E</h3>
+            <h3>Drama Llamas</h3>
             <p>Wenger, Emma, Ellisiv, Thomas V</p>
         </div>
     </section>
@@ -237,6 +288,7 @@
         </div>
         <div class="side-quest">
             <div class="wrapper">
+            <span class="sparkle"></span>
             <h3>Kongekoppen</h3>
             <p>ÉN Konge får lov til å drikke kongekoppen, men den skal fylles av folket.</p>
             <p>20 poeng!!!</p>
