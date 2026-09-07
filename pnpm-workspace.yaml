@@ -1,4 +1,0 @@
-# esbuild ships a platform binary and needs its postinstall to run.
-# pnpm blocks build scripts by default; this is the explicit allowlist.
-allowBuilds:
-  esbuild: true
