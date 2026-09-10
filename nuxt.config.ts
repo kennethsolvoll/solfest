@@ -18,7 +18,16 @@ export default defineNuxtConfig({
       htmlAttrs: { lang: 'no' },
       meta: [
         { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1.0' }
+        { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
+        { name: 'theme-color', content: '#0a1020' }
+      ],
+      link: [
+        { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
+        {
+          rel: 'stylesheet',
+          href: 'https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap'
+        }
       ]
     }
   },
@@ -27,7 +36,12 @@ export default defineNuxtConfig({
     public: {
       // Baked at build time. Server render and first client render agree on it,
       // so the countdown has no hydration mismatch. Corrected on mount.
-      buildTime: new Date().toISOString()
+      buildTime: new Date().toISOString(),
+
+      // Live event data. Empty means the site simply renders the JSON baked
+      // in at build time, which is exactly how it behaves today.
+      supabaseUrl: process.env.NUXT_PUBLIC_SUPABASE_URL ?? '',
+      supabaseAnonKey: process.env.NUXT_PUBLIC_SUPABASE_ANON_KEY ?? ''
     }
   },
 
@@ -36,10 +50,10 @@ export default defineNuxtConfig({
   ssr: true,
   nitro: {
     prerender: {
-      // Routes are enumerated from content/events, so crawling is unnecessary.
-      // It also chases hashed asset URLs through app.baseURL and 404s the build.
+      // Routes are enumerated from content/events, so no crawling is needed.
+      // Crawling also chases hashed asset URLs through app.baseURL and 404s.
       crawlLinks: false,
-      routes: ['/', ...slugs.map(s => `/${s}`)]
+      routes: ['/', '/admin', ...slugs.map(s => `/${s}`)]
     }
   }
 })

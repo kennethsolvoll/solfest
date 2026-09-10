@@ -1,18 +1,13 @@
 <script setup lang="ts">
 import type { PointsRow } from '~/composables/useEvents'
-defineProps<{ title: string; rows: PointsRow[]; footnote: string }>()
+defineProps<{ rows: PointsRow[]; footnote: string }>()
 </script>
 
 <template>
-  <section class="points">
-    <h2>{{ title }}</h2>
-    <table class="points-table">
+  <div>
+    <table class="ptable">
       <thead>
-        <tr>
-          <th>Aktivitet</th>
-          <th>Poeng</th>
-          <th>Kommentar</th>
-        </tr>
+        <tr><th>Aktivitet</th><th style="text-align:right">Poeng</th><th>Kommentar</th></tr>
       </thead>
       <tbody>
         <tr v-for="(row, i) in rows" :key="i">
@@ -23,5 +18,5 @@ defineProps<{ title: string; rows: PointsRow[]; footnote: string }>()
       </tbody>
     </table>
     <p class="points-footnote">{{ footnote }}</p>
-  </section>
+  </div>
 </template>

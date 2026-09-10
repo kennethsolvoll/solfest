@@ -1,0 +1,148 @@
+{
+  "slug": "2026-09-12",
+  "name": "Innflytnings- og bursdagsfest!",
+  "startsAt": "2026-09-10T23:00:00+02:00",
+  "minigame": true,
+  "beforeStart": {
+    "title": "Velkommen til Innflytnings- og bursdagsfest!",
+    "lines": [
+      "Håper du er klar for en fartsfylt kveld med masse morro <3!",
+      "Mer info vises når timeren treffer 00:00:00!",
+      "Slå deg ned og spill litt imens.",
+      "(Det kan hende personen med høyest score får premie, post screenshot på arrangementet! Ingen juksing!!)"
+    ]
+  },
+  "afterStart": {
+    "title": "HÆLA I TAKET FOLKENS!",
+    "lines": [
+      "Scroll ned og bli kjent med kveldens regler og agenda, kos dere masse!"
+    ]
+  },
+  "intro": "Velkommen til festen du sent vil glemme. Kveldens første aktivitet starter kl. 18:30, mer info finner du nedenfor. Kvelden byr på en rekke leker med lagspill, poeng og premier! Vi har stilletid kl. 23:00, så da vandrer vi videre til Samfundet. Håper konkurranseinstinktet er skrudd opp til øverste gir!!",
+  "rules": [
+    "Det er ikke lov til å lukte på 'Mysterieshots' som finnes på kjøkkenet, disse skal hives rett i gapet!",
+    "Det er kun én mysterieshot per pers. Disse drikkes på eget ansvar.",
+    "Ett mysterieshot tilsvarer 1 poeng, her kan laget samle inn litt!",
+    "Når OPUS kommer på, slipper man alt og starter stein, saks, papir! Fire utvalgte **OPUS Fenriker** starter alltid leken når sangen er i gang.",
+    "Hvert lag bør utnevne en 'Bånnskientusiast' :beer:.",
+    "Hvert lag bør utnevne en 'Chilikriger' :chili:.",
+    "Bånnskientusiasten deltar på en bånnskikonkurranse der en breezer skal drikkes raskest mulig. Alle Bånnskientusiaster kjører mot hverandre samtidig og vinneren henter poeng til laget sitt!",
+    "Chilikrigeren deltar på chilismaking. Alle krigerne får en chili hver som skal konsumeres (hele!!), og alle konsumerer chilien samtidig. Alle som gjennomfører henter poeng til laget sitt!",
+    "ÉN modig sjel (på hele festen) får muligheten til å bånnskie KONGEKOPPEN! Denne koppen kan gi laget ditt MYE poeng. Haken er at hvem som helst på festen kan tilføye drikkbar væske oppi koppen.",
+    "Konkurranser gir 10 poeng til førsteplass, 5 poeng til andreplass og 3 poeng til tredjeplass."
+  ],
+  "schedule": [
+    {
+      "time": "18:30",
+      "title": "Musikkquiz",
+      "text": "Klarer du å huske navn og artist på alle disse BANGERNE?? Man kan få 1+1 poeng for sangnavn og artist(er). Siste bokstav i sangtittel er en del av et hemmelig ord!"
+    },
+    {
+      "time": "19:30",
+      "title": ":beer: Bånnskikamp :beer:",
+      "text": "Hvem tar den raskeste bånnskien?"
+    },
+    {
+      "time": "20:00",
+      "title": "Tegnelek",
+      "text": "Tegn filmen uten å si et ord! Resten av laget ditt må prøve å gjette hvilken film du prøver å tegne. Ingen juksing!"
+    },
+    {
+      "time": "21:00",
+      "title": ":chili: Inferno :flame:",
+      "text": "Chilikrigerne samles for å teste sitt mot."
+    },
+    {
+      "time": "21:30",
+      "title": ":flex: Partypumpen :flex:",
+      "text": "Del inn én øvelse per lagmedlem (Pull-ups, leg raises, dips, push-ups). Laget med flest repetisjoner totalt vinner!"
+    },
+    {
+      "time": "22:00",
+      "title": "Pølsepause",
+      "text": "Vi hiver i oss litt pølser og gjør oss klar for byinnvasjon."
+    },
+    {
+      "time": "22:30",
+      "title": "Kåringer!",
+      "text": "Vi skal kåre vinnerne for kvelden!!"
+    }
+  ],
+  "teams": [
+    {
+      "name": "Swipe Right Squad",
+      "members": ["Mæggis", "Tobias", "Audun", "**Victor**"]
+    },
+    {
+      "name": "The Hangover Heroes",
+      "members": ["Marius", "**Seb the pleb**", "Kenneth"]
+    },
+    {
+      "name": "Tequila Mockingbirds",
+      "members": ["Arnerarne", "Lars", "Sunniva", "**Marielle**"]
+    },
+    {
+      "name": "Drama Llamas",
+      "members": ["**Maria**", "Mathias", "Hedda", "Sindre"]
+    }
+  ],
+  "sideQuests": [
+    {
+      "title": "Mysterieshots",
+      "text": "Hver person kan ta 1 shot fra 'mystery shot brettet'."
+    },
+    {
+      "title": "Breezer bånnski",
+      "text": "En Bånnskientusiast fra hvert lag stiller klar til bånnskikamp."
+    },
+    {
+      "title": ":cake: Bursdagsglede :cake:",
+      "text": "Få bursdagsbarnet til å føle seg spesiell! Her er det kun fantasien som setter grenser."
+    },
+    {
+      "title": ":chili: Inferno :flame:",
+      "text": "En Chilikriger fra hvert lag skal tøye sine grenser i tandem med krigerbanden."
+    },
+    {
+      "title": ":crown: **Kongekoppen** :crown:",
+      "text": "ÉN Konge får lov til å drikke kongekoppen, men den skal fylles av folket."
+    }
+  ],
+  "points": {
+    "title": ":trophy: Poengsystem :trophy:",
+    "rows": [
+      {
+        "activity": "Mysterieshot **✨**",
+        "points": "1p per shot",
+        "comment": "Maks 1 per deltaker."
+      },
+      {
+        "activity": ":beer: Bånnskikamp :beer:",
+        "points": "Vinner: 3p",
+        "comment": "Raskeste bånnskientusiasten henter poeng."
+      },
+      {
+        "activity": ":cake: Bursdagsglede :cake:",
+        "points": "Vinner: 5p",
+        "comment": "Kan kun gjøres én gang per lag. Bursdagsbarnet må følge seg spesiell!"
+      },
+      {
+        "activity": ":chili: Inferno :flame:",
+        "points": "5p",
+        "comment": "For den modigste chilikriger."
+      },
+      {
+        "activity": ":crown: **Kongekoppen** :crown:",
+        "points": "7p",
+        "comment": "Kun én får gjennomføre!"
+      },
+      {
+        "activity": ":trophy: Konkurranser :trophy:",
+        "points": "10p / 5p / 3p",
+        "comment": "1. plass: 10p, 2. plass: 5p, 3. plass: 3p"
+      }
+    ],
+    "footnote": "Samle så mange poeng som mulig – det laget med flest poeng vinner premie! 🎉"
+  },
+  "footer": "Pst: Du er den vakreste jeg vet!"
+}

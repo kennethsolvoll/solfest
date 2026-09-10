@@ -19,3 +19,6 @@ dist/
 .DS_Store
 Thumbs.db
 _to_delete/
+
+# Files Claude sends into the chat land here
+Claude outputs/
