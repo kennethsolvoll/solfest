@@ -5,7 +5,7 @@ const props = defineProps<{ event: PartyEvent }>()
 
 // Baked JSON paints first; the live row overlays it if Supabase is reachable.
 const { event: live, updatedAt, isLive } = useLiveEvent(props.event)
-const { started, formatted, items, current, next, stateOf } = usePartyClock(live)
+const { started, formatted, items, current, next, phase, stateOf, startsAtLabel } = usePartyClock(live)
 const { picked, load } = useMyTeam()
 
 onMounted(() => load(live.value.teams.length))
@@ -35,7 +35,7 @@ const stamp = computed(() => {
 
 <template>
   <div class="phone">
-    <div class="masthead">
+    <div v-if="started" class="masthead">
       <h1 class="wordmark">Solfest</h1>
       <div class="stamp">
         <template v-if="isLive && stamp">oppdatert <b>{{ stamp }}</b></template>
@@ -44,17 +44,20 @@ const stamp = computed(() => {
       </div>
     </div>
 
-    <!-- Before it starts: countdown and the minigame. Nothing is given away. -->
+    <!-- Before it starts: when, how long, why, then something to play. -->
     <template v-if="!started">
+      <p class="starts-at">{{ startsAtLabel }}</p>
       <div class="countdown">{{ formatted }}</div>
+
+      <section class="welcome">
+        <div class="sec-head"><h2>{{ live.beforeStart.title }}</h2><div class="rule" /></div>
+        <p v-for="(line, i) in live.beforeStart.lines.slice(1)" :key="i" class="intro">{{ line }}</p>
+      </section>
+
       <p class="countdown-note">{{ live.beforeStart.lines[0] }}</p>
       <ClientOnly>
         <MiniGame v-if="live.minigame" />
       </ClientOnly>
-      <section>
-        <div class="sec-head"><h2>{{ live.beforeStart.title }}</h2><div class="rule" /></div>
-        <p v-for="(line, i) in live.beforeStart.lines.slice(1)" :key="i" class="intro">{{ line }}</p>
-      </section>
     </template>
 
     <!-- Once it starts, the page leads with what is happening right now. -->
@@ -69,7 +72,7 @@ const stamp = computed(() => {
       </section>
 
       <div class="sticky">
-        <NowBar :current="current" :next="next" :first-up="items[0]" />
+        <NowBar :phase="phase" :current="current" :next="next" />
         <JumpNav />
       </div>
 

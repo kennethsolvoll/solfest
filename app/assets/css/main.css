@@ -96,6 +96,16 @@ a { color: var(--gold); }
 .stamp b { color: var(--muted); font-weight: 500; }
 
 /* ---------- countdown (pre-party) ---------- */
+.starts-at {
+  margin: 26px 0 0;
+  text-align: center;
+  font-family: var(--font-mono);
+  font-size: 12.5px;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
 .countdown {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
@@ -103,7 +113,7 @@ a { color: var(--gold); }
   text-align: center;
   color: var(--gold);
   letter-spacing: -.02em;
-  margin: 28px 0 8px;
+  margin: 6px 0 8px;
 }
 .countdown-note { text-align: center; color: var(--muted); font-size: 14.5px; margin: 0 0 20px; }
 
@@ -292,24 +302,25 @@ section { padding: 26px 0 4px; scroll-margin-top: 132px; }
 .quest p { margin: 0; font-size: 15px; line-height: 1.45; color: #2c2110; font-family: inherit; }
 .quest .sparkle { background: none; box-shadow: none; color: #6b4c00; padding: 0; }
 
-/* points */
-.ptable { width: 100%; border-collapse: collapse; font-size: 14.5px; }
-.ptable th {
-  text-align: left; padding: 0 0 8px;
-  font-family: var(--font-mono);
-  font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase;
-  color: var(--dim); font-weight: 400;
-  border-bottom: 1px solid var(--line-soft);
+/* points — a list, not a table: three columns never fit a phone */
+.points-list { list-style: none; margin: 0; padding: 0; }
+.points-list li { padding: 12px 0; border-bottom: 1px solid var(--line-soft); }
+.points-list li:last-child { border-bottom: none; }
+.points-row {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 14px;
 }
-.ptable td { padding: 11px 0; border-bottom: 1px solid var(--line-soft); vertical-align: top; }
-.ptable td:nth-child(2) {
+.points-what { font-size: 15.5px; font-weight: 500; }
+.points-val {
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
+  font-size: 14px;
   color: var(--gold);
-  white-space: nowrap; text-align: right;
-  padding-left: 14px; padding-right: 14px;
+  white-space: nowrap;
 }
-.ptable td:nth-child(3) { color: var(--muted); font-size: 13.5px; }
+.points-note { margin: 3px 0 0; font-size: 13.5px; color: var(--muted); line-height: 1.5; }
 .points-footnote { color: var(--muted); font-size: 14px; text-align: center; margin: 16px 0 0; }
 
 /* effects — restrained, and off when motion is unwelcome */
@@ -410,4 +421,12 @@ select { max-width: 160px; }
   margin: -10px -10px -10px 0;
   border-radius: 6px;
 }
-.sec-close:hover { color: var(--text); }
+.sec-close:hover, .sec-close:focus-visible { color: var(--text); animation: none; }
+
+/* A slow gold shimmer — the only hint that this section can be dismissed. */
+.sec-close { animation: shimmer-hint 2.8s ease-in-out infinite; }
+@keyframes shimmer-hint {
+  0%, 100% { color: var(--dim); text-shadow: none; }
+  50%      { color: var(--gold); text-shadow: 0 0 9px rgba(255, 201, 77, .6); }
+}
+@media (prefers-reduced-motion: reduce) { .sec-close { animation: none; } }

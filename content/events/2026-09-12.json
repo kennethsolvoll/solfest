@@ -1,7 +1,7 @@
 {
   "slug": "2026-09-12",
   "name": "Innflytnings- og bursdagsfest!",
-  "startsAt": "2026-09-10T23:00:00+02:00",
+  "startsAt": "2026-09-10T23:30:00+02:00",
   "minigame": true,
   "beforeStart": {
     "title": "Velkommen til Innflytnings- og bursdagsfest!",
@@ -49,7 +49,7 @@
     },
     {
       "time": "21:00",
-      "title": ":chili: Inferno :flame:",
+      "title": ":chili: Inferno :chili:",
       "text": "Chilikrigerne samles for å teste sitt mot."
     },
     {
@@ -100,7 +100,7 @@
       "text": "Få bursdagsbarnet til å føle seg spesiell! Her er det kun fantasien som setter grenser."
     },
     {
-      "title": ":chili: Inferno :flame:",
+      "title": ":chili: Inferno :chili:",
       "text": "En Chilikriger fra hvert lag skal tøye sine grenser i tandem med krigerbanden."
     },
     {
@@ -127,7 +127,7 @@
         "comment": "Kan kun gjøres én gang per lag. Bursdagsbarnet må følge seg spesiell!"
       },
       {
-        "activity": ":chili: Inferno :flame:",
+        "activity": ":chili: Inferno :chili:",
         "points": "5p",
         "comment": "For den modigste chilikriger."
       },
