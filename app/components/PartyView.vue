@@ -49,7 +49,7 @@ const stamp = computed(() => {
       <p class="starts-at">{{ startsAtLabel }}</p>
       <div class="countdown">{{ formatted }}</div>
 
-      <section class="welcome">
+      <section class="welcome pre">
         <div class="sec-head"><h2>{{ live.beforeStart.title }}</h2><div class="rule" /></div>
         <p v-for="(line, i) in live.beforeStart.lines.slice(1)" :key="i" class="intro">{{ line }}</p>
       </section>
@@ -72,7 +72,7 @@ const stamp = computed(() => {
       </section>
 
       <div class="sticky">
-        <NowBar :phase="phase" :current="current" :next="next" />
+        <NowBar :phase="phase" :current="current" :next="next" :idle-label="live.idleLabel" />
         <JumpNav />
       </div>
 

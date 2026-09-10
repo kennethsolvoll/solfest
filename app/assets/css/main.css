@@ -278,7 +278,8 @@ section { padding: 26px 0 4px; scroll-margin-top: 132px; }
   padding: 11px 14px;
 }
 .tcard .name { font-weight: 600; font-size: 16px; color: var(--tc); margin-bottom: 5px; }
-.tcard .members { font-size: 14px; color: var(--muted); }
+.tcard .members { display: flex; flex-wrap: wrap; gap: 6px; }
+.tcard .chip { font-size: 13px; padding: 3px 9px; }
 .tcard.mine { background: var(--surface-2); border-color: var(--line); }
 .tcard .you {
   font-family: var(--font-mono);
@@ -407,6 +408,13 @@ select { max-width: 160px; }
 /* Welcome text: a normal titled section like the rest, but dismissable —
    it is read once at the start of the night and then only takes up room. */
 .welcome { padding-top: 20px; }
+
+/* Countdown variant: centred under a centred timer, and no dismiss button,
+   so the rule line has nothing to separate. */
+.welcome.pre { text-align: center; }
+.welcome.pre .sec-head { justify-content: center; margin-bottom: 12px; }
+.welcome.pre .rule { display: none; }
+.welcome.pre .intro + .intro { margin-top: 4px; }
 .welcome .intro { margin: 0; }
 
 .sec-close {

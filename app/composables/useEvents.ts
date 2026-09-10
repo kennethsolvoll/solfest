@@ -8,6 +8,8 @@ export interface PartyEvent {
   name: string
   startsAt: string
   minigame?: boolean
+  /** Shown as NÅ before the first activity begins. Defaults to "Mingling". */
+  idleLabel?: string
   beforeStart: { title: string; lines: string[] }
   afterStart: { title: string; lines: string[] }
   intro: string
