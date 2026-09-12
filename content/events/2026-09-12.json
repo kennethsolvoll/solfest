@@ -71,11 +71,11 @@
   "teams": [
     {
       "name": "Swipe Right Squad",
-      "members": ["Mæggis", "Tobias", "Audun", "**Victor**"]
+      "members": ["Mæggis", "Tobias", "Audun"]
     },
     {
       "name": "The Hangover Heroes",
-      "members": ["Marius", "**Seb the pleb**", "Kenneth"]
+      "members": ["Marius", "**Seb the pleb**", "Synne"]
     },
     {
       "name": "Tequila Mockingbirds",
@@ -83,7 +83,11 @@
     },
     {
       "name": "Drama Llamas",
-      "members": ["**Maria**", "Mathias", "Hedda", "Sindre"]
+      "members": ["**Maria K**", "Mathias", "Hedda", "Konggud"]
+    },
+    {
+      "name": "Hakuna Ma'Vodkas",
+      "members": ["Maria A", "Pider", "**Victor**", "Kenneth"]
     }
   ],
   "sideQuests": [
